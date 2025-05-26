@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Project</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="login" id="panelLogin">
+    <h1>Open Project</h1>
+    <label for="inputAPIKey">API Key:</label>
+    <input id="inputAPIKey" type="text"
+           placeholder="Tu API Key aquí...">
+    <button id="botonIniciarSesion">
+        Iniciar
+    </button>
+</div>
+
+<header>
+    <a href=""><img src="img/logo.png" alt="logo"></a>
+    <h1>Hola:<span id="nombreUsuario"> </span></h1>
+    <button onclick="CerrarSesion()">[<-</button>
+</header>
+<div class="contenedor">
+    <aside>
+        <button class="main-button active" onclick="cambiarMain(0)">Proyectos</button>
+        <button class="main-button" onclick="cambiarMain(1)">Usuarios</button>
+        <button class="main-button" onclick="cambiarMain(2)">Tareas</button>
+        <button class="main-button" onclick="cambiarMain(3)">Cronologias</button>
+    </aside>
+    <main>
+        <div class="main active">
+            Proyectos:
+            <table>
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                </tr>
+                </thead>
+                <tbody id="tablaProyectos">
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="main">
+            Usuarios:
+            <table>
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                </tr>
+                </thead>
+                <tbody id="tablaUsuarios">
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="main">
+            <div class="tabs">
+                <button class="tab-button active" onclick="cambiarTab(0)">Tareas mas largas</button>
+                <button class="tab-button" onclick="cambiarTab(1)">Tareas mas nuevas</button>
+                <button class="tab-button" onclick="cambiarTab(2)">Tareas por proyecto</button>
+            </div>
+
+            <div class="tab-content active">
+                <h2>Tareas mas largas</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Tarea</th>
+                        <th>Duracion</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha limite</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaTareasPorDuracion">
+
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="tab-content">
+                <h2>Tareas mas nuevas</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Tarea</th>
+                        <th>Fecha Creacion</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaTareasNuevas">
+
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="tab-content">
+                <div class="selectorProyecto">
+                    <h2>Tareas por proyecto</h2>
+                    <select name="proyecto" id="selectorProyecto" onchange="cargarTareasPorProyecto(this.value)">
+
+                    </select>
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Tarea</th>
+                        <th>Proyecto</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaTareasPorProyecto">
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+        <div class="main">
+            <div class="selectorUsuario">
+                <h2>Horas por usuario</h2>
+                <select name="usuario" id="selectorUsuario" onchange="cargarHorasPorUsuario(this.value)">
+
+                </select>
+            </div>
+            Horas:
+            <table>
+                <thead>
+                <tr>
+                    <th>Tarea</th>
+                    <th>Horas</th>
+                    <th>Proyecto</th>
+                </tr>
+                </thead>
+                <tbody id="tablaHoras">
+
+                </tbody>
+
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+<script src="js/main.js"></script>
+</html>
