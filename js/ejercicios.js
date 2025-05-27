@@ -22,6 +22,7 @@ async function HacerPeticion(url) {
     }
 }
 
+let listaProyectosPorNombre = document.getElementById("listaProyectosPorNombre")
 
 let entradasOrdenadasPorFechaCreacion = document.getElementById("entradasOrdenadasPorFechaCreacion")
 let entradasOrdenadasPorHoras = document.getElementById("entradasOrdenadasPorHoras")
@@ -30,15 +31,26 @@ let selectUsuario = document.getElementById("selectUsuario")
 let entradasPorUsuario = document.getElementById("entradasPorUsuario")
 
 async function CargarDatos() {
-    let datos = await HacerPeticion('work_packages?sortBy=[["createdAt","desc"]]&pageSize=5')
+    let datos
+
+    datos = await HacerPeticion('projects?filters=[{ "name": { "operator": "~", "values": ["proyectazo"] } }]')
+    console.log(datos._embedded.elements)
+
+    datos._embedded.elements.forEach(element => {
+        listaProyectosPorNombre.innerHTML += `
+            <p>${element.name}</p>
+        `
+    })
+
+
+    datos = await HacerPeticion('work_packages?sortBy=[["createdAt","desc"]]&pageSize=5')
     datos._embedded.elements.forEach(element => {
         entradasOrdenadasPorFechaCreacion.innerHTML += `
             <p>${element.subject} - ${element.createdAt}</p>
         `
     })
 
-    datos = await HacerPeticion('work_packages?sortBy=[["duration","desc"]]&pageSize=5')
-
+    datos = await HacerPeticion('work_packages?sortBy=[["duration","desc"]]&pageSize=5&filters=[{ "duration": { "operator": "!", "values": ["0"] }}]')
     datos._embedded.elements.forEach(element => {
         entradasOrdenadasPorHoras.innerHTML += `
             <p>${element.subject} - ${element.duration}</p>
@@ -54,7 +66,7 @@ async function CargarDatos() {
     })
 
     datos = await HacerPeticion('users')
-    console.log(datos._embedded.elements)
+
     datos._embedded.elements.forEach(element => {
         selectUsuario.innerHTML += `
             <option value="${element.id}">${element.login}</option>
@@ -66,7 +78,6 @@ async function FiltrarPorUsuario() {
     let usuario = selectUsuario.value
     entradasPorUsuario.innerHTML = ""
     let datos = await HacerPeticion(`time_entries?filters=[{ "user": { "operator": "=", "values":[ "${usuario}" ]} }]`)
-    console.log(datos)
 
     datos._embedded.elements.forEach(element => {
         entradasPorUsuario.innerHTML += `
