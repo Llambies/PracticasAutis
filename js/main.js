@@ -31,6 +31,9 @@ let tablaListaTareasLargasUsuario = document.getElementById("tablaListaTareasLar
 let indexSeccionActiva = 0
 let seccionBoton = document.getElementsByClassName("seccion-button");
 let secciones = document.getElementsByClassName("seccionPrincipal");
+// Modal usuarios
+let modalCrearUsuario = document.getElementById("modalCrearUsuario")
+let modalEditarUsuario = document.getElementById("modalEditarUsuario")
 
 const baseURL = "http://localhost:8080/api/v3/";
 
@@ -50,14 +53,15 @@ botonIncioSesion.addEventListener("click", () => {
     iniciarSesion(inputAPIKey.value);
 });
 
-async function HacerPeticion(url, apikey) {
+async function HacerPeticion(url, apikey, method = "GET", bodyData = null) {
     try {
         const response = await fetch(baseURL + url, {
-            method: 'GET',
+            method: method,
             headers: {
                 'Authorization': 'Basic ' + btoa(`apikey:${apikey}`), // btoa codifica a Base64
                 'Content-Type': 'application/json'
-            }
+            },
+            body: bodyData != null ? JSON.stringify(bodyData) : null
         });
 
         if (!response.ok) {
@@ -68,8 +72,10 @@ async function HacerPeticion(url, apikey) {
         // Aquí puedes trabajar con los datos recibidos
     } catch (error) {
         console.error('Error al conectar con la API de OpenProject:', error);
+        return null; // Return null explicitly on error
     }
 }
+
 
 async function iniciarSesion(apikey) {
     let data = await HacerPeticion("users/me", apikey);
@@ -190,10 +196,15 @@ async function CargarUsuarios() {
     for (let userIndex in data._embedded.elements) {
         let usuarioData = data._embedded.elements[userIndex]
         tablaListaUsuario.innerHTML += `
-            <tr class="trProyecto" onclick="AbrirUsuario(${data._embedded.elements[userIndex].id})">
+            <tr class="trProyecto" ">
                 <td>${usuarioData.login}</td>
                 <td>${usuarioData.firstName}</td>
                 <td>${usuarioData.lastName}</td>
+                <td>
+                <button onclick="AbrirUsuario(${data._embedded.elements[userIndex].id})">👁</button>
+                <button onclick="BorrarUsuario(${usuarioData.id})">🗑</button>
+                <button onclick="AbrirModalEditarUsuario(${usuarioData.id})">✏</button>
+                </td>
             </tr>`
     }
 
@@ -270,6 +281,94 @@ function cambiarSeccion(i) {
     secciones[i].classList.add("activa");
     seccionBoton[i].classList.add("activa");
     localStorage.setItem("indexSeccionActiva", indexSeccionActiva)
+}
+
+function AbrirModalUsuario() {
+    modalCrearUsuario.classList.add("activo")
+}
+
+async function CrearUsuario() {
+    modalCrearUsuario.classList.remove("activo")
+
+    let usuario = document.getElementById("usuarioCrearInput").value
+    let nombre = document.getElementById("nombreCrearInput").value
+    let apellidos = document.getElementById("apellidosCrearInput").value
+    let correo = document.getElementById("correoCrearInput").value
+    let password = document.getElementById("passwordCrearInput").value
+
+    let data = {
+        "login": usuario,
+        "firstName": nombre,
+        "lastName": apellidos,
+        "email": correo,
+        "password": password,
+        "status": "active"
+    }
+
+    let result = await HacerPeticion("users", APIKey, "POST", data)
+    if (result) {
+        console.log("Usuario creado exitosamente:", result)
+        alert("Usuario creado exitosamente")
+        CargarUsuarios()
+    } else {
+        console.error("Error al crear usuario")
+    }
+}
+
+function BorrarUsuario(id) {
+
+    HacerPeticion(`users/${id}`, APIKey, "DELETE")
+    CargarUsuarios()
+
+}
+
+async function AbrirModalEditarUsuario(id) {
+    console.log(id)
+    modalEditarUsuario.classList.add("activo")
+
+
+    let idUsuarioEditarInput = document.getElementById("idUsuarioEditarInput")
+    let usuarioInput = document.getElementById("usuarioEditarInput")
+    let nombreInput = document.getElementById("nombreEditarInput")
+    let apellidosInput = document.getElementById("apellidosEditarInput")
+    let correoInput = document.getElementById("correoEditarInput")
+
+    let datosUsuario = await HacerPeticion(`users/${id}`, APIKey)
+    console.log(datosUsuario)
+    idUsuarioEditarInput.value = datosUsuario.id
+    usuarioInput.value = datosUsuario.login
+    nombreInput.value = datosUsuario.firstName
+    apellidosInput.value = datosUsuario.lastName
+    correoInput.value = datosUsuario.email
+
+}
+
+function EditarUsuario() {
+
+    let idUsuarioEditarInput = document.getElementById("idUsuarioEditarInput")
+    let usuarioInput = document.getElementById("usuarioEditarInput")
+    let nombreInput = document.getElementById("nombreEditarInput")
+    let apellidosInput = document.getElementById("apellidosEditarInput")
+    let correoInput = document.getElementById("correoEditarInput")
+
+    let data = {
+        "login": usuarioInput.value,
+        "firstName": nombreInput.value,
+        "lastName": apellidosInput.value,
+        "email": correoInput.value
+    }
+
+    let result = HacerPeticion(`users/${idUsuarioEditarInput.value}`, APIKey, "PATCH", data)
+    if (result) {
+        console.log("Usuario editado exitosamente:", result)
+        alert("Usuario editado exitosamente")
+        CargarUsuarios()
+    } else {
+        console.error("Error al editar usuario")
+    }
+
+    modalEditarUsuario.classList.remove("activo")
+
 }
 
 function CerrarSesion() {

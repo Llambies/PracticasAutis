@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Open Project</title>
@@ -97,12 +97,16 @@
         <section class="seccionPrincipal">
             <div class="listaUsuarios">
                 <h2>Usuarios</h2>
+                <button onclick="AbrirModalUsuario()">
+                    Agregar usuario
+                </button>
                 <table>
                     <thead>
                     <tr>
                         <th>Usuario</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody id="tablaListaUsuario">
@@ -110,10 +114,33 @@
                         <td>Name</td>
                         <td>Name</td>
                         <td>Name</td>
+                        <td>Name</td>
                     </tr>
                     </tbody>
 
                 </table>
+            </div>
+            <div id="modalCrearUsuario" class="formUsuario">
+                <h2>Agregar usuario</h2>
+                <input type="text" id="usuarioCrearInput" placeholder="Nombre de usuario" required>
+                <input type="text" id="nombreCrearInput" placeholder="Nombre" required>
+                <input type="text" id="apellidosCrearInput" placeholder="Apellidos" required>
+                <input type="email" id="correoCrearInput" placeholder="Email" required>
+                <input type="password" id="passwordCrearInput" placeholder="Contraseña" minlength="10" required>
+                <button onclick="CrearUsuario()">
+                    Agregar
+                </button>
+            </div>
+            <div id="modalEditarUsuario" class="formUsuario">
+                <h2>Agregar usuario</h2>
+                <input type="hidden" id="idUsuarioEditarInput">
+                <input type="text" id="usuarioEditarInput" placeholder="Nombre de usuario" required>
+                <input type="text" id="nombreEditarInput" placeholder="Nombre" required>
+                <input type="text" id="apellidosEditarInput" placeholder="Apellidos" required>
+                <input type="email" id="correoEditarInput" placeholder="Email" required>
+                <button onclick="EditarUsuario()">
+                    Editar
+                </button>
             </div>
             <div id="panelDetallesUsuario" class="detallesUsuario">
                 <div class="cabeceraDetallesUsuario">

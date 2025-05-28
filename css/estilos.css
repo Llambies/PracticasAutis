@@ -191,13 +191,24 @@ table {
 
 }
 
-.trProyecto:hover {
-    background-color: #fabd2f;
-    cursor: pointer;
-    color: #282828;
-}
 
 .trProyecto td {
     padding: 8px 12px;
 }
 
+.formUsuario{
+    position: absolute;
+    left: calc(50% - 300px);
+    top: 2000px;
+    width: 600px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 80%;
+    background-color: #282828;
+    border: 2px solid #ebdbb2;
+    padding: 0 8px;
+
+}
+
+.formUsuario.activo{
+    top: calc(50% - 40%);
+}
