@@ -46,8 +46,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (indice) {
             cambiarSeccion(indice);
         }
+
+
     }
 )
+
+// Add event listener to close modals when clicking outside
+document.addEventListener("mousedown", (event) => {
+    const modals = document.querySelectorAll(".formUsuario.activo");
+    modals.forEach(modal => {
+        // Check if the click is outside the modal content
+        // We're checking if the click target is the modal itself (the background)
+        if (event.target != modal) {
+            CerrarModal(modal.id);
+        }
+    });
+});
 
 botonIncioSesion.addEventListener("click", () => {
     iniciarSesion(inputAPIKey.value);
@@ -203,7 +217,7 @@ async function CargarUsuarios() {
                 <td>
                 <button onclick="AbrirUsuario(${data._embedded.elements[userIndex].id})">👁</button>
                 <button onclick="BorrarUsuario(${usuarioData.id})">🗑</button>
-                <button onclick="AbrirModalEditarUsuario(${usuarioData.id})">✏</button>
+                <button onclick="AbrirModalEditarUsuario(${usuarioData.id})">🖊</button>
                 </td>
             </tr>`
     }
@@ -288,7 +302,7 @@ function AbrirModalUsuario() {
 }
 
 async function CrearUsuario() {
-    modalCrearUsuario.classList.remove("activo")
+    CerrarModal("modalCrearUsuario")
 
     let usuario = document.getElementById("usuarioCrearInput").value
     let nombre = document.getElementById("nombreCrearInput").value
@@ -367,7 +381,7 @@ function EditarUsuario() {
         console.error("Error al editar usuario")
     }
 
-    modalEditarUsuario.classList.remove("activo")
+    CerrarModal("modalEditarUsuario")
 
 }
 
@@ -375,4 +389,8 @@ function CerrarSesion() {
     localStorage.setItem("APIKey", "")
     APIKey = ""
     panelLogin.classList.toggle("mover");
+}
+
+function CerrarModal(modalId) {
+    document.getElementById(modalId).classList.remove("activo");
 }

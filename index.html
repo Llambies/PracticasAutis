@@ -121,7 +121,10 @@
                 </table>
             </div>
             <div id="modalCrearUsuario" class="formUsuario">
-                <h2>Agregar usuario</h2>
+                <div class="cabecera-modal">
+                    <h2>Agregar usuario</h2>
+                    <button class="boton-cerrar" onclick="CerrarModal('modalCrearUsuario')">X</button>
+                </div>
                 <input type="text" id="usuarioCrearInput" placeholder="Nombre de usuario" required>
                 <input type="text" id="nombreCrearInput" placeholder="Nombre" required>
                 <input type="text" id="apellidosCrearInput" placeholder="Apellidos" required>
@@ -132,7 +135,10 @@
                 </button>
             </div>
             <div id="modalEditarUsuario" class="formUsuario">
-                <h2>Agregar usuario</h2>
+                <div class="cabecera-modal">
+                    <h2>Editar usuario</h2>
+                    <button class="boton-cerrar" onclick="CerrarModal('modalEditarUsuario')">X</button>
+                </div>
                 <input type="hidden" id="idUsuarioEditarInput">
                 <input type="text" id="usuarioEditarInput" placeholder="Nombre de usuario" required>
                 <input type="text" id="nombreEditarInput" placeholder="Nombre" required>

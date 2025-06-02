@@ -184,6 +184,12 @@ table {
     width: 100%;
 }
 
+th {
+    padding: 8px 12px;
+    background-color: #ebdbb2;
+    color: #282828;
+}
+
 .trProyecto {
     background-color: #282828;
     margin: 4px;
@@ -191,12 +197,22 @@ table {
 
 }
 
-
 .trProyecto td {
     padding: 8px 12px;
 }
 
-.formUsuario{
+.trProyecto td button {
+    cursor: pointer;
+    color: #282828;
+    box-sizing: border-box;
+    border: 0;
+    background-color: #fabd2f;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 8px;
+}
+
+.formUsuario {
     position: absolute;
     left: calc(50% - 300px);
     top: 2000px;
@@ -209,6 +225,24 @@ table {
 
 }
 
-.formUsuario.activo{
+.formUsuario.activo {
     top: calc(50% - 40%);
+}
+
+.cabecera-modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boton-cerrar {
+    cursor: pointer;
+    color: #282828;
+    box-sizing: border-box;
+    border: 0;
+    background-color: #fb4934;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 8px;
+    font-weight: bold;
 }
