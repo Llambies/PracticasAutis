@@ -2,182 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Open Project</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenProject Dashboard - Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-<div class="login" id="panelLogin">
-    <h1>Open Project</h1>
-    <label for="inputAPIKey">API Key:</label>
-    <input id="inputAPIKey" type="text"
-           placeholder="Tu API Key aquí...">
-    <button id="botonIniciarSesion">
-        Iniciar
-    </button>
-</div>
-
-<header>
-    <a href=""></a>
-    <span>Hola:<span id="nombreUsuario"> </span></span>
-    <button onclick="CerrarSesion()">[<-</button>
-</header>
-<div class="contenedor admin">
-    <aside>
-        <button class="seccion-button active" onclick="cambiarSeccion(0)">Proyectos</button>
-        <button class="seccion-button" onclick="cambiarSeccion(1)">Usuarios</button>
-    </aside>
-    <main>
-        <section class="seccionPrincipal activa">
-            <div class="listaProyectos">
-                <h2>Proyectos</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Nombre</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tablaListaProyectos">
-                    <tr class="trProyecto">
-                        <td>Name</td>
-                        <td>Name</td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-
-            <div id="panelDetallesProyecto" class="detallesProyecto">
-                <div class="cabeceraDetallesProyecto">
-                    <h2>Detalles del proyecto</h2>
-                    <button onclick="CerrarDetalles()">X</button>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>OpenProject Dashboard</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="apikey">API Key:</label>
+                    <input type="password" id="apikey" name="apikey" required>
+                    <small class="help-text">Ingresa tu API key de OpenProject</small>
                 </div>
-                <p>Proyecto: <span id="displayNombreProyectoPanel">Holi</span></p>
-                <p>Fecha de creacion: <span id="displayFechaCreacionProyectoPanel">Holi</span></p>
-                <p>Ultima modificacion: <span id="displayUltimaModificacionProyectoPanel">Holi</span></p>
-                <ul id="displayListaMiembrosProyectoPanel">
-                    <li>Uno</li>
-                    <li>Dos</li>
-                    <li>Tres</li>
-                </ul>
-                <h3>Tareas mas recientes</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Duracion</th>
-                        <th>Fecha creacion</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tablaListaTareasRecientesProyecto">
-                    <tr>
-                        <td>a</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <h3>Tareas mas largas</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Duracion</th>
-                        <th>Fecha creacion</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tablaListaTareasLargasProyecto">
-                    <tr>
-                        <td>a</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    </div>
 
-            </div>
-
-        </section>
-        <section class="seccionPrincipal">
-            <div class="listaUsuarios">
-                <h2>Usuarios</h2>
-                <button onclick="AbrirModalUsuario()">
-                    Agregar usuario
-                </button>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tablaListaUsuario">
-                    <tr class="trProyecto">
-                        <td>Name</td>
-                        <td>Name</td>
-                        <td>Name</td>
-                        <td>Name</td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-            <div id="modalCrearUsuario" class="formUsuario">
-                <div class="cabecera-modal">
-                    <h2>Agregar usuario</h2>
-                    <button class="boton-cerrar" onclick="CerrarModal('modalCrearUsuario')">X</button>
-                </div>
-                <input type="text" id="usuarioCrearInput" placeholder="Nombre de usuario" required>
-                <input type="text" id="nombreCrearInput" placeholder="Nombre" required>
-                <input type="text" id="apellidosCrearInput" placeholder="Apellidos" required>
-                <input type="email" id="correoCrearInput" placeholder="Email" required>
-                <input type="password" id="passwordCrearInput" placeholder="Contraseña" minlength="10" required>
-                <button onclick="CrearUsuario()">
-                    Agregar
-                </button>
-            </div>
-            <div id="modalEditarUsuario" class="formUsuario">
-                <div class="cabecera-modal">
-                    <h2>Editar usuario</h2>
-                    <button class="boton-cerrar" onclick="CerrarModal('modalEditarUsuario')">X</button>
-                </div>
-                <input type="hidden" id="idUsuarioEditarInput">
-                <input type="text" id="usuarioEditarInput" placeholder="Nombre de usuario" required>
-                <input type="text" id="nombreEditarInput" placeholder="Nombre" required>
-                <input type="text" id="apellidosEditarInput" placeholder="Apellidos" required>
-                <input type="email" id="correoEditarInput" placeholder="Email" required>
-                <button onclick="EditarUsuario()">
-                    Editar
-                </button>
-            </div>
-            <div id="panelDetallesUsuario" class="detallesUsuario">
-                <div class="cabeceraDetallesUsuario">
-                    <h2>Detalles del Usuario</h2>
-                    <button onclick="CerrarDetalles()">X</button>
-                </div>
-                <p>Usuario: <span id="displayNombreUsuarioPanel">Holi</span></p>
-                <p>Fecha de creacion: <span id="displayFechaCreacionUsuarioPanel">Holi</span></p>
-                <p>Ultima modificacion: <span id="displayUltimaModificacionUsuarioPanel">Holi</span></p>
-                <p>Lista de miembros:</p>
-                <h3>Tareas mas recientes</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Duracion</th>
-                        <th>Fecha creacion</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tablaListaTareasRecientesUsuario">
-                    <tr>
-                        <td>a</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-        </section>
-    </main>
-</div>
+    <script type="module" src="js/login.js"></script>
 </body>
-<script src="js/main.js"></script>
-</html>
+</html> 
